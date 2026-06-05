@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Calculadora Segura</title>
+  </head>
+  <body>
+    <h1>Calculadora</h1>
+    <div id="resultado"></div>
+
+    <script>
+      // Función reutilizable (DRY)
+      function calcular(numero1, numero2, operacion) {
+        switch (operacion) {
+          case "sumar":
+            return numero1 + numero2;
+          case "restar":
+            return numero1 - numero2;
+          case "multiplicar":
+            return numero1 * numero2;
+          case "dividir":
+            if (numero2 === 0) {
+              return "Error: no se puede dividir entre cero.";
+            }
+            return numero1 / numero2;
+          default:
+            return "Error: operación no válida.";
+        }
+      }
+
+      // Solicitar datos al usuario
+      const numero1 = Number(prompt("Ingrese el primer número:"));
+      const numero2 = Number(prompt("Ingrese el segundo número:"));
+      const operacion = prompt(
+        "Ingrese la operación (sumar, restar, multiplicar, dividir):",
+      );
+
+      // Validar entradas
+      if (isNaN(numero1) || isNaN(numero2)) {
+        document.getElementById("resultado").textContent =
+          "Error: debe ingresar números válidos.";
+      } else {
+        const resultado = calcular(numero1, numero2, operacion);
+
+        // Mostrar resultado de forma simple (KISS)
+        document.getElementById("resultado").textContent =
+          "Resultado: " + resultado;
+      }
+    </script>
+  </body>
+</html>
