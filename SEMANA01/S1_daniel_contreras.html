@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mi primera app</title>
+  </head>
+  <body>
+    <main>
+      <h1>Bienvenido</h1>
+      <button id="botonEdad">Click para tu edad</button>
+    </main>
+
+    <script>
+      const botonEdad = document.getElementById("botonEdad");
+
+      botonEdad.addEventListener("click", verificarEdad);
+
+      function verificarEdad() {
+        const edad = Number(prompt("Dime tu edad"));
+
+        if (Number.isNaN(edad)) {
+          alert("Ingrese una edad válida");
+        } else if (edad >= 18) {
+          alert("Eres mayor de edad");
+        } else {
+          alert("Eres menor");
+        }
+      }
+    </script>
+  </body>
+</html>
