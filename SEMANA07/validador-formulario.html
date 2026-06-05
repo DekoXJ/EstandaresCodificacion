@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Validador de Formulario</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 0;
+      }
+
+      main {
+        width: 360px;
+        margin: 60px auto;
+        background-color: #ffffff;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+      }
+
+      h1 {
+        text-align: center;
+        color: #333333;
+      }
+
+      label {
+        display: block;
+        margin-top: 15px;
+        font-weight: bold;
+      }
+
+      input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        box-sizing: border-box;
+        border: 1px solid #cccccc;
+        border-radius: 5px;
+      }
+
+      button {
+        width: 100%;
+        margin-top: 20px;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #2563eb;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #1d4ed8;
+      }
+
+      .error {
+        color: #d00000;
+        font-size: 14px;
+        margin-top: 4px;
+      }
+
+      .exito {
+        color: #008000;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Registro</h1>
+
+      <form id="formularioRegistro">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" />
+        <p id="errorNombre" class="error"></p>
+
+        <label for="edad">Edad:</label>
+        <input type="text" id="edad" />
+        <p id="errorEdad" class="error"></p>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" />
+        <p id="errorEmail" class="error"></p>
+
+        <label for="contrasena">Contraseña:</label>
+        <input type="password" id="contrasena" />
+        <p id="errorContrasena" class="error"></p>
+
+        <button type="submit">Registrarse</button>
+      </form>
+
+      <p id="mensajeResultado" class="exito"></p>
+    </main>
+
+    <script>
+      const formularioRegistro = document.getElementById("formularioRegistro");
+
+      formularioRegistro.addEventListener("submit", validarFormulario);
+
+      function limpiarMensajes() {
+        document.getElementById("errorNombre").textContent = "";
+        document.getElementById("errorEdad").textContent = "";
+        document.getElementById("errorEmail").textContent = "";
+        document.getElementById("errorContrasena").textContent = "";
+        document.getElementById("mensajeResultado").textContent = "";
+      }
+
+      function validarFormulario(evento) {
+        evento.preventDefault();
+        limpiarMensajes();
+
+        const nombre = document.getElementById("nombre").value.trim();
+        const edadTexto = document.getElementById("edad").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const contrasena = document.getElementById("contrasena").value;
+
+        const nombreEstaVacio = nombre === "";
+        const nombreTieneMenosDeTresCaracteres = nombre.length < 3;
+        const edad = Number(edadTexto);
+        const edadNoEsNumero = edadTexto === "" || Number.isNaN(edad);
+        const edadFueraDeRango = edad < 18 || edad > 65;
+        const emailNoContieneArroba = !email.includes("@");
+        const emailNoContienePunto = !email.includes(".");
+        const contrasenaMuyCorta = contrasena.length < 6;
+
+        if (nombreEstaVacio) {
+          document.getElementById("errorNombre").textContent =
+            "El nombre no puede estar vacío.";
+          return;
+        }
+
+        if (nombreTieneMenosDeTresCaracteres) {
+          document.getElementById("errorNombre").textContent =
+            "El nombre debe tener al menos 3 caracteres.";
+          return;
+        }
+
+        if (edadNoEsNumero) {
+          document.getElementById("errorEdad").textContent =
+            "La edad debe ser un número válido.";
+          return;
+        }
+
+        if (edadFueraDeRango) {
+          document.getElementById("errorEdad").textContent =
+            "La edad debe estar entre 18 y 65 años.";
+          return;
+        }
+
+        if (emailNoContieneArroba || emailNoContienePunto) {
+          document.getElementById("errorEmail").textContent =
+            "El email debe contener '@' y '.'.";
+          return;
+        }
+
+        if (contrasenaMuyCorta) {
+          document.getElementById("errorContrasena").textContent =
+            "La contraseña debe tener al menos 6 caracteres.";
+          return;
+        }
+
+        document.getElementById("mensajeResultado").textContent =
+          "Registro exitoso";
+      }
+    </script>
+  </body>
+</html>
